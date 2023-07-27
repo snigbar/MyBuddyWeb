@@ -6,13 +6,15 @@ const multer = require('multer')
 const helmet = require('helmet')
 const morgan = require('morgan')
 const path = require('path')
+const userRoute = require('./router/user.js')
+const postRoute = require('./router/posts.js')
+
+const  {register}  = require('./controllers/auth.js')
+const router = require('./router/auth.js')
+const verifyJwt = require('./middlewares/token.js')
+const { createPost } = require('./controllers/posts.js')
+
 const port = process.env.PORT || 5000
-// const { fileURLToPath } = require('url')
-
-
-// configuration
-// const __filename = fileURLToPath(import.meta.url)
-// const __dirname = path.dirname(__filename)
 
 
 dotenv.config()
@@ -38,7 +40,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage})
 
+// routes with file
 app.post('auth/register', upload.single('picture'), register)
+app.post('/posts', verifyJwt ,upload.single('picture'), createPost)
+
+// routes
+app.use('/auth', router)
+app.use('/users', userRoute)
+app.use('/posts', postRoute)
 
 
 // connect to db
