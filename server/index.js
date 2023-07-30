@@ -9,6 +9,8 @@ const path = require('path')
 const userRoute = require('./router/user.js')
 const postRoute = require('./router/posts.js')
 
+
+
 const  {register}  = require('./controllers/auth.js')
 const router = require('./router/auth.js')
 const verifyJwt = require('./middlewares/token.js')
@@ -55,5 +57,7 @@ app.use('/posts', postRoute)
 mongoose.connect(process.env.DB_URI, {
     useNewUrlParser:true,
     useUnifiedTopology: true,
-}).then(() => app.listen(port, () => console.log("connected to ", port)))
+}).then(() => {
+    app.listen(port, () => console.log("connected to ", port))
+})
 .catch((err) => console.log(err))
