@@ -27,13 +27,13 @@ app.use(express.urlencoded({ limit: '30mb',extended: true }));
 app.use(helmet())
 app.use(helmet.crossOriginResourcePolicy({policy:'cross-origin'}))
 app.use(morgan('common'))
-app.use('/assests', express.static(path.join(__dirname, 'public/assets')))
+app.use('/assets', express.static(path.join(__dirname, '/public/assets')))
 
 // storage
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "public/assest")
+        cb(null, "public/assets")
     },
     filename: (req,file,cb) => {
         cb(null, file.originalname)
@@ -43,10 +43,11 @@ const storage = multer.diskStorage({
 const upload = multer({storage})
 
 // routes with file
-app.post('auth/register', upload.single('picture'), register)
+app.post('/auth/register', upload.single('picture'), register)
 app.post('/posts', verifyJwt ,upload.single('picture'), createPost)
 
 // routes
+app.get('/', (req,res) => res.send("running...."))
 app.use('/auth', router)
 app.use('/users', userRoute)
 app.use('/posts', postRoute)

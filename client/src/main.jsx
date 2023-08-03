@@ -7,7 +7,6 @@ import { Provider } from 'react-redux'
 import storage from 'redux-persist/lib/storage'
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore, persistReducer, FLUSH, REHYDRATE,PURGE, REGISTER,PAUSE, PERSIST} from 'redux-persist'
-import { authSlice } from './state/AuthSlice.jsx'
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 
 
