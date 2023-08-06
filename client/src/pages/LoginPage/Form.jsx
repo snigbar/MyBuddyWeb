@@ -48,24 +48,31 @@ const Form = () => {
     const isLogin = pageType === "login"
     const isRegister = pageType === "register"
 
-    const register = async(values, onSubmitProps) => {
-        const formData = new FormData()
-       
-        for(let value in values) {
-            formData.append(value, values[value])
-        }
-        formData.append("picturePath", values.picture.name)
 
-        const savedUserResponse = await fetch("http://localhost:5000/auth/register",
+    const register = async (values, onSubmitProps) => {
+      // this allows us to send form info with image
+      const formData = new FormData();
+      for (let value in values) {
+        formData.append(value, values[value]);
+      }
+      
+      formData.append("picturePath", values.picture.name);
+
+      const savedUserResponse = await fetch(
+        "http://localhost:5000/auth/register",
         {
-        method: "POST",
-        body:formData
-        }).then((res) => res.json())
-        
-        onSubmitProps.resetForm()
-        setPageType("login")
-        console.log(savedUserResponse)
-    }
+          method: "POST",
+          body: formData,
+        }
+      );
+      const savedUser = await savedUserResponse.json();
+      onSubmitProps.resetForm();
+  
+      if (savedUser) {
+        setPageType("login");
+      }
+    };
+  
 
 
     const login = async (values, onSubmitProps) => {
@@ -114,23 +121,32 @@ const Form = () => {
                    
                    {/* file upload */}
                    <Box gridColumn="span 4" border={`1px solid ${palette.neutral.medium}`}>
-                    <Dropzone
+                   <Dropzone
                     acceptedFiles=".jpg,.jpeg,.png"
                     multiple={false}
-                    onDrop={(acceptedFiles) => setFieldValue("picture", acceptedFiles[0])}
-                    >
-                    {({getRootProps, getInputProps}) => (
-                        <Box
+                    onDrop={(acceptedFiles) =>
+                      setFieldValue("picture", acceptedFiles[0])
+                    }
+                  >
+                    {({ getRootProps, getInputProps }) => (
+                      <Box
                         {...getRootProps()}
                         border={`2px dashed ${palette.primary.main}`}
                         p="1rem"
-                        sx={{"& :hover": {cursor: "pointer"}}}   
-                        >
-                        <input {...getInputProps()}></input>
-                        {values.picture? <FlexBetween><Typography>{values.picture.name}</Typography><EditOutlined></EditOutlined></FlexBetween>:<p>Add picture here</p>}
-                        </Box>
+                        sx={{ "&:hover": { cursor: "pointer" } }}
+                      >
+                        <input {...getInputProps()} />
+                        {!values.picture ? (
+                          <p>Add Picture Here</p>
+                        ) : (
+                          <FlexBetween>
+                            <Typography>{values.picture.name}</Typography>
+                            <EditOutlined/>
+                          </FlexBetween>
+                        )}
+                      </Box>
                     )}
-                    </Dropzone>
+                  </Dropzone>
                    </Box>
                     
                     </>

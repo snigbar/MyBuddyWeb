@@ -28,8 +28,8 @@ const Navbar = () => {
             MyBuddyWeb
         </Typography>
     {bigScreen && 
-        <FlexBetween backgroundColor={neutralLight} borderRadius="9px" gap="3rem" padding="0.1rem 1.5rem">
-            <InputBase placeholder='Search...'></InputBase>
+        <FlexBetween backgroundColor={neutralLight} borderRadius="9px" gap="3rem" padding="0.1rem 1.5rem"> 
+            <InputBase placeholder='Search...'/>
             <IconButton><Search></Search></IconButton>
         </FlexBetween>
     }
@@ -40,7 +40,7 @@ const Navbar = () => {
 
         <FlexBetween gap="2rem">
             <IconButton onClick={() => dispatch(setMode())}>
-                {theme.palette.mode === "dark" ? <DarkMode sx={{fontSize: "25px"}}></DarkMode>:<LightMode sx={{color: dark, fontSize:"25px"}}></LightMode>}
+                {theme.palette.mode === "dark" ?<LightMode sx={{color: dark, fontSize:"25px"}}></LightMode> : <DarkMode sx={{fontSize: "25px"}}></DarkMode>}
             </IconButton>
             <Message sx={{fontSize: "25px"}}></Message>
             <Notifications sx={{fontSize: "25px"}}></Notifications>
