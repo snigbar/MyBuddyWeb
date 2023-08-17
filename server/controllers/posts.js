@@ -1,11 +1,11 @@
 const User = require("../models/Models")
 const Post = require("../models/Post")
 
-const createPost = async(req, res) => {
-   try{ 
-    const {userId, description, picturePath} = req.body
-    const user = await User.findById(userId)
-    const newPost = new Post({
+const createPost = async (req, res) => {
+    try {
+      const { userId, description, picturePath } = req.body;
+      const user = await User.findById(userId);
+      const newPost = new Post({
         userId,
         firstName: user.firstName,
         lastName: user.lastName,
@@ -13,17 +13,17 @@ const createPost = async(req, res) => {
         description,
         userPicturePath: user.picturePath,
         picturePath,
-        like: {},
-        comments:[]
-    })
-
-    await newPost.save()
-    const post = Post.find()
-    res.status(201).json(post)
-    }catch(err){
-        res.status(409).json({message: err.message})
+        likes: {},
+        comments: [],
+      });
+      await newPost.save();
+  
+      const post = await Post.find();
+      res.status(201).json(post);
+    } catch (err) {
+      res.status(409).json({ message: err.message });
     }
-}   
+  };
 
 
 const getFeedPosts = async(req, res) => {
@@ -47,20 +47,30 @@ const getUserPosts = async(req, res) =>{
 
 // impression
 
-const likePost = async(req, res) => {
+const likePost = async (req, res) => {
     try {
-        const {id} = req.params
-        const {userId} = req.body
-        const post = await Post.findById({id})
-        const isLiked = post.likes.get({userId})
-        if(isLiked) post.likes.delete(userId)
-        else post.likes.set(userId, true)
-        const updatedPost = await Post.findByIdAndUpdate(id, {likes: post.likes}, {new: true})
-        res.status(200).json(updatedPost)
-        
-    } catch (error) {
-        res.status(404).json({message: error.message})
+      const { id } = req.params;
+      const { userId } = req.body;
+
+      const post = await Post.findById(id);
+      const isLiked = post.likes.get(userId);
+  
+      if (isLiked) {
+        post.likes.delete(userId);
+      } else {
+        post.likes.set(userId, true);
+      }
+  
+      const updatedPost = await Post.findByIdAndUpdate(
+        id,
+        { likes: post.likes },
+        { new: true }
+      );
+  
+      res.status(200).json(updatedPost);
+    } catch (err) {
+      res.status(404).json({ message: err.message });
     }
-}
+  };
 
 module.exports = {createPost, likePost, getFeedPosts, getUserPosts}
