@@ -4,11 +4,11 @@ import { setPosts } from '../state/AuthSlice'
 import SinglePostWidget from './SinglePostWidget'
 
 
-const PostsWidet = ({userId, isProfile = false}) => {
+const PostsWidet = ({userId, isProfile}) => {
     const dispatch = useDispatch()
     const posts = useSelector(state => state.posts)
     const token = useSelector(state => state.token)
-    
+
 
     const getPosts = async () => {
         const response = await fetch("http://localhost:5000/posts", {
@@ -33,7 +33,7 @@ const PostsWidet = ({userId, isProfile = false}) => {
 
       useEffect(() => {
         isProfile? getUserPosts() : getPosts()
-      }, [])
+      }, [isProfile])
 
   return (
     <>

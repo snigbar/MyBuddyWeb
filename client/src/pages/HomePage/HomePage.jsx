@@ -26,7 +26,7 @@ const HomePage = () => {
       {/* post section */}
       <Box flexBasis={bigScreen && "42%"} mt={!bigScreen && "2rem"}>
         <MyPostWidgets picturePath={picturePath}></MyPostWidgets>
-        <PostsWidet userId={_id}></PostsWidet>
+        <PostsWidet userId={_id} isProfile={false}></PostsWidet>
       </Box>
 
       {/* rightbar */}
