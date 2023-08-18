@@ -22,7 +22,7 @@ const UserWidget = ({userId, picturePath}) => {
 
   
     const getUser = async() => {
-        const response = await fetch(`http://localhost:5000/users/${userId}`, {
+        const response = await fetch(`https://my-buddy-web.vercel.app/users/${userId}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`

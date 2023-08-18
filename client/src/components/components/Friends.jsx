@@ -22,7 +22,7 @@ const Friends = ({ friendId, name, subtitle, userPicturePath }) => {
   const isFriend = friends.find((friend) => friend._id === friendId);
   const patchFriend = async () => {
     const response = await fetch(
-      `http://localhost:5000/users/${_id}/${friendId}`,
+      `https://my-buddy-web.vercel.app/users/${_id}/${friendId}`,
       {
         method: "PATCH",
         headers: {

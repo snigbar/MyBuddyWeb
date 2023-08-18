@@ -16,7 +16,7 @@ const ProfilePage = () => {
   const bigScreen = useMediaQuery("(min-width:1000px)");
 
   const getUser = async () => {
-    const response = await fetch(`http://localhost:5000/users/${userId}`, {
+    const response = await fetch(`https://my-buddy-web.vercel.app/users/${userId}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -30,7 +30,7 @@ const ProfilePage = () => {
     getUser();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
  
-  console.log(user)
+
   if(!user) return null
 
   return (

@@ -16,7 +16,7 @@ const FriendsWidget = ({ userId }) => {
   const getFriends = async () => {
 
     const response = await fetch(
-      `http://localhost:5000/users/${userId}/friends`,
+      `https://my-buddy-web.vercel.app/users/${userId}/friends`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
